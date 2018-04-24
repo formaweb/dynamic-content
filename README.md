@@ -1,6 +1,6 @@
 # Dynamic Content
 
-Welcome to Dynamic Content  Ruby Gem!
+Welcome to Dynamic Content Ruby Gem!
 
 Simple way to manage dynamic fields with editable content on database for Rails and ActiveAdmin.
 
@@ -28,7 +28,7 @@ Or you can customize the installation:
 
     $ rails g dynamic_content:install --skip-activeadmin # Skip generate ActiveAdmin files
     $ rails g dynamic_content:install --skip-initializer # Skip generate initializer file
-    $ rails g dynamic_content:install pt-BR # Setting default locale on initializer
+    $ rails g dynamic_content:install pt-BR # Setting locale on initializer
 
 Migrate database:
 
@@ -58,8 +58,7 @@ end
 
 # You also can change setup parameters directly
 DynamicContent.structure_path = 'lib/my-fields.yml'
-DynamicContent.locale = 'pt-br'
-...
+DynamicContent.locale = 'pt-BR'
 ```
 
 Setting up Dynamic Content into your Application Controller
@@ -71,7 +70,7 @@ Setting up Dynamic Content into your Application Controller
 before_action :load_dynamic_content
 
 # if you want, you can change the key for find your content
-before_action -> { load_dynamic_content(['pages'].include?(controller_name) ? "#{action_name}_#{controller_name}" : controller_name) }
+before_action -> { load_dynamic_content("#{action_name}_#{controller_name}") }
 ```
 
 On your view, call to wanted content like:
@@ -81,7 +80,7 @@ On your view, call to wanted content like:
 <%= c :sample, :sample_field %>
 
 # to load image from content
-<%= c_image_tag :sample, :image_field, size: '#300x300' %>
+<%= c_image_tag :sample, :image_field, size: '300x300#' %>
 ```
 
 ## Upcoming features
@@ -89,6 +88,7 @@ On your view, call to wanted content like:
 ### Gem level
 
 - Use I18n on views and admin files
+- All data types examples of structure file and how to get it
 - Multi-locale support
 - View analyzer to auto-generate structure file
 - Nested fields data type setting on sections
