@@ -1,0 +1,25 @@
+<%
+  parent_class = ActiveRecord::Migration
+  parent_class = parent_class[parent_class.current_version] if Rails::VERSION::MAJOR >= 5
+-%>
+class CreateDynamicContentSections < <%= parent_class.to_s %>
+
+  def change
+    create_table :dynamic_content_sections do |t|
+      t.integer :page_id
+      t.string :name
+      t.string :slug
+      t.boolean :on_application, default: false
+      t.integer :order
+
+      <%- if Rails::VERSION::MAJOR >= 5 -%>
+      t.timestamps
+      <%- else -%>
+      t.timestamps null: false
+      <%- end -%>
+    end
+    add_index :dynamic_content_sections, :slug
+
+  end
+
+end

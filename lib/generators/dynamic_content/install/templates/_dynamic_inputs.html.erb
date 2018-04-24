@@ -1,0 +1,57 @@
+<%= f.fields_for :sections do |s| %>
+  <fieldset class="inputs dynamic_content" id="<%= s.object.slug %>">
+    <legend>
+      <span>
+        <%= s.object.name %>
+        <% if s.object.on_application %><small>Este conteúdo pode aparecer em outras páginas.</small><% end %>
+      </span>
+    </legend>
+    <ol>
+      <%= s.fields_for :contents, include_id: false do |c| %>
+        <% if c.object.formtastic_compatible? %>
+        <%= c.hidden_field :id %>
+        <% input_data = c.input c.object.get_type_options[:field], hint: c.object.hint, label: c.object.name, collection: c.object.data_options, as: c.object.get_type_options[:as], input_html: { class: c.object.get_type_options[:input_class] }, wrapper_html: { class: (c.object.has_divisor ? 'has-divisor' : nil), id: [s.object.slug, c.object.slug].join('-') } %>
+        <%= defined?(force_print) ? input_data : '' %>
+        <% else %>
+
+        <li class="input optional <%= c.object.get_type_options[:wrapper_class] %>" id="<%= s.object.slug %>-<%= c.object.slug %>">
+          <%= c.hidden_field :id %>
+
+          <%= c.label :content, c.object.name %>
+          <% case c.object.data_type %>
+          <% when 'text' %>
+          <%= c.text_area :content %>
+          <% when 'markdown' %>
+          <% if c.object.type_options == 'string' %><%= c.text_field :content %><% else %><%= c.text_area :content %><% end %>
+          <% when 'editor' %>
+          <%= c.text_area :content, class: (c.object.type_options.blank? ? 'simple-editor' : c.object.type_options) %>
+          <% when 'embed' %>
+          <%= c.text_area :content, class: 'ace-editor', style: 'display: none;' %>
+          <span class="ace-box inputs"><div id="ace-editor" style="width: 100%; height: 250px;"></div></span>
+          <% when 'uploader' %>
+          <%= c.file_field :file %>
+          <p class="inline-hints"><%= c.object.file ? 'Arquivo atual: ' + c.object.file.path.split('/').last : 'Ainda sem arquivo' %></p>
+          <% when 'image' %>
+          <%= c.file_field :file %>
+          <% if c.object.type_options != 'without_alt' %>
+          <br><%= c.text_field :content, style: 'margin: 10px 0 0 20%;', placeholder: 'Texto alternativo para a imagem.' %>
+          <% end %>
+          <p class="inline-hints"><%= c.object.file ? image_tag(c.object.file.thumb('150x').url, width: '150') : 'Ainda sem imagem' %></p>
+          <% else %>
+          <%= c.text_field :content %>
+          <% end %>
+
+          <% if c.object.has_caption %>
+          <%= c.label :caption, '&nbsp;'.html_safe %>
+          <%= c.text_field :caption %>
+          <% end %>
+
+          <% unless c.object.hint.blank? %>
+          <p class="inline-hints"><%= c.object.hint.html_safe %></p>
+          <% end %>
+        </li>
+        <% end %>
+      <% end %>
+    </ol>
+  </fieldset>
+<% end %>

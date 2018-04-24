@@ -1,0 +1,29 @@
+application:
+  name: General
+  title: My Application
+  keywords: ''
+  description: ''
+  sections:
+    sample:
+      name: Sample Section
+      contents:
+        sample_field:
+          name: Sample Field
+          content: 'Default content for sample field'
+        rich_sample:
+          name: HTML Field
+          content: '<p>Sample of HTML default content.</p>'
+          data_type: 'editor'
+home:
+  name: Home Controller
+  title: Home
+  keywords: ''
+  description: ''
+  sections:
+    header_sample:
+      name: Some Home Section
+      contents:
+        boolean_sample:
+          name: Is awesome gem?
+          content: true
+          data_type: boolean

@@ -1,0 +1,26 @@
+<%
+  parent_class = ActiveRecord::Migration
+  parent_class = parent_class[parent_class.current_version] if Rails::VERSION::MAJOR >= 5
+-%>
+class CreateDynamicContentPages < <%= parent_class.to_s %>
+
+  def change
+    create_table :dynamic_content_pages do |t|
+      t.boolean :status, default: true
+      t.integer :order, default: 1
+      t.string :name
+      t.string :title
+      t.string :keywords
+      t.string :description
+      t.string :slug
+
+      <%- if Rails::VERSION::MAJOR >= 5 -%>
+      t.timestamps
+      <%- else -%>
+      t.timestamps null: false
+      <%- end -%>
+    end
+    add_index :dynamic_content_pages, :slug
+  end
+
+end
