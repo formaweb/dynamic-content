@@ -6,6 +6,10 @@ module DynamicContentHelper
     image, data, options = '', @dynamic_content, { alt: nil, size: '' }
     options = options.merge(args.first) if args.count > 0
 
+    if data.nil?
+      raise DynamicContent::NoDataLoadedError, 'No Dynamic Content data loaded, try to include `before_action :load_dynamic_content` on your controller.'
+    end
+
     if data.has_key?(section.to_sym) && data[section.to_sym].has_key?(content.to_sym)
       data = data[section.to_sym][content.to_sym]
 
@@ -40,6 +44,10 @@ module DynamicContentHelper
     data = @dynamic_content
 
     # options[:append] += link_to_edit(section, content) if current_admin_user && !options[:only_numbers]
+
+    if data.nil?
+      raise DynamicContent::NoDataLoadedError, 'No Dynamic Content data loaded, try to include `before_action :load_dynamic_content` on your controller.'
+    end
 
     if data.has_key?(section.to_sym) && data[section.to_sym].has_key?(content.to_sym)
       result = data[section.to_sym][content.to_sym]

@@ -8,6 +8,9 @@ module DynamicContent
   class DependencyError < ErrorLoading
   end
 
+  class NoDataLoadedError < ErrorLoading
+  end
+
   class NoStructureFileError < KeyError
   end
 
