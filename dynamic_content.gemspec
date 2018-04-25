@@ -14,7 +14,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'http://github.com/formaweb/dynamic_content'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files lib`.split($/)
+  # spec.files         = `git ls-files lib`.split($/)
+  spec.files         = Dir['{lib,app}/**/*'].keep_if { |file| File.file?(file) }
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']

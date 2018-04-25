@@ -7,7 +7,6 @@ require 'mime-types'
 module DynamicContent
   autoload :VERSION, 'dynamic_content/version'
   autoload :TagSerializer, 'dynamic_content/tag_serializer'
-  autoload :Models, 'dynamic_content/models'
   autoload :Processor, 'dynamic_content/processor'
 
   class << self
