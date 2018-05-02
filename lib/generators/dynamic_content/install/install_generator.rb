@@ -27,7 +27,7 @@ module DynamicContent
       end
 
       def setup_activeadmin
-        return if options[:skip_activeadmin]
+        return if options[:skip_activeadmin] || !defined?(::ActiveAdmin)
 
         empty_directory "app/views/admin"
         empty_directory "app/admin"
